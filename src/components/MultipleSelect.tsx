@@ -34,6 +34,7 @@ function MultipleSelectSWR() {
       {/* Hata durumunda bir uyarı mesajı göster */}
       {error && <Alert severity="error">Failed to load data!</Alert>}
       <Autocomplete
+        className="bg-gray-300 rounded-lg shadow-md p-4"
         multiple
         id="filtered-characters-select"
         options={characters}
@@ -56,10 +57,14 @@ function MultipleSelectSWR() {
               src={option.image}
               alt={option.name}
             />
-            <Typography variant="body2" color="textPrimary">
-              {highlightText(option.name, inputValue, inputValue)}
-            </Typography>
-            - {option.episode.length} episodes
+            <Box>
+              <Typography variant="body2" color="textPrimary">
+                {highlightText(option.name, inputValue, inputValue)}
+              </Typography>
+              <Typography variant="body2" color="textPrimary">
+                {option.episode.length} episodes
+              </Typography>
+            </Box>
           </Box>
         )}
         renderInput={(params) => (
