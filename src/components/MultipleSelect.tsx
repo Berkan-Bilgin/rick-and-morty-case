@@ -42,7 +42,7 @@ function MultipleSelectSWR() {
         onInputChange={(event, newInputValue) => {
           setInputValue(newInputValue);
         }}
-        open={open}
+        open={characters.length > 0 && open}
         onOpen={() => setOpen(true)}
         onClose={() => setOpen(false)}
         renderOption={(props, option) => (
