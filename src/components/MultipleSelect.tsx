@@ -10,23 +10,9 @@ import {
   CircularProgress,
   Alert,
 } from "@mui/material";
-
-const fetcher = (
-  ...args: [input: RequestInfo, init?: RequestInit | undefined]
-) =>
-  fetch(...args).then((res) => {
-    if (!res.ok) {
-      throw new Error("An error occurred while fetching the data.");
-    }
-    return res.json();
-  });
-
-interface Character {
-  id: number;
-  name: string;
-  image: string;
-  episode: string[];
-}
+import { Character } from "@/types";
+import { fetcher } from "@/utils/fetcher";
+import { highlightText } from "@/utils/highlightText";
 
 function MultipleSelectSWR() {
   const [inputValue, setInputValue] = useState("");
@@ -42,20 +28,6 @@ function MultipleSelectSWR() {
   );
 
   const characters = data?.results || [];
-
-  const highlightText = (
-    text: string,
-    part: string
-  ): (string | JSX.Element)[] => {
-    const parts = text.split(new RegExp(`(${part})`, "gi"));
-    return parts.map((part, index) =>
-      part.toLowerCase() === inputValue.toLowerCase() ? (
-        <b key={index}>{part}</b>
-      ) : (
-        part
-      )
-    );
-  };
 
   return (
     <Stack spacing={3} sx={{ width: 500 }}>
