@@ -57,7 +57,7 @@ function MultipleSelectSWR() {
               alt={option.name}
             />
             <Typography variant="body2" color="textPrimary">
-              {highlightText(option.name, inputValue)}
+              {highlightText(option.name, inputValue, inputValue)}
             </Typography>
             - {option.episode.length} episodes
           </Box>

@@ -1,10 +1,11 @@
 export const highlightText = (
   text: string,
-  part: string
+  part: string,
+  inputValue: string
 ): (string | JSX.Element)[] => {
   const parts = text.split(new RegExp(`(${part})`, "gi"));
   return parts.map((part, index) =>
-    part.toLowerCase() === text.toLowerCase() ? ( // Bu satır muhtemelen hatalı, düzeltilmesi gerekiyor.
+    part.toLowerCase() === inputValue.toLowerCase() ? (
       <b key={index}>{part}</b>
     ) : (
       part
