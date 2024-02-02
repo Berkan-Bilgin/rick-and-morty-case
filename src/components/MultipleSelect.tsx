@@ -11,13 +11,28 @@ import {
   Alert,
 } from "@mui/material";
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+const fetcher = (
+  ...args: [input: RequestInfo, init?: RequestInit | undefined]
+) =>
+  fetch(...args).then((res) => {
+    if (!res.ok) {
+      throw new Error("An error occurred while fetching the data.");
+    }
+    return res.json();
+  });
+
+interface Character {
+  id: number;
+  name: string;
+  image: string;
+  episode: string[];
+}
 
 function MultipleSelectSWR() {
   const [inputValue, setInputValue] = useState("");
   const [open, setOpen] = useState(false);
 
-  const { data, error, isLoading } = useSWR(
+  const { data, error, isLoading } = useSWR<{ results: Character[] }>(
     open && inputValue
       ? `https://rickandmortyapi.com/api/character/?name=${encodeURIComponent(
           inputValue
@@ -28,7 +43,10 @@ function MultipleSelectSWR() {
 
   const characters = data?.results || [];
 
-  const highlightText = (text, part) => {
+  const highlightText = (
+    text: string,
+    part: string
+  ): (string | JSX.Element)[] => {
     const parts = text.split(new RegExp(`(${part})`, "gi"));
     return parts.map((part, index) =>
       part.toLowerCase() === inputValue.toLowerCase() ? (
